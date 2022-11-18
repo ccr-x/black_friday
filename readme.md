@@ -5,7 +5,7 @@ To succesfully run the code one must first:
     - Activated the virtual environment using either ```.\venv\scripts\activate``` (for Windows) or ```source venv/bin/activate``` (for Linux)
     - Installed the necessary requirements using ```pip install -r requirements.txt```
 
-    - Have a configured database with a "black_friday" table
+    - Have a configured (postgresql) database with a "black_friday" table
         - (table_name) black_friday
         - (columns) id(int, PRIMARY KEY), NOT NULL
                     item-name(varchar(255), NOT NULL

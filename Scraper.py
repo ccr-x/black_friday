@@ -9,7 +9,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from datetime import datetime
-from sharepoint import Sharepoint
 
 OPERATING_SYSTEM = "windows"
 

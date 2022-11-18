@@ -12,6 +12,14 @@ To succesfully run the code one must first:
                     item-price(varchar(8)), NOT NULL
                     shop-link(varchar(255)), NOT NULL
                     date-changed(date), NOT NULL
+        - CREATE TABLE black_friday 
+        (
+            id INT NOT NULL PRIMARY KEY, 
+            `item-name` VARCHAR(255) NOT NULL, 
+            `item-price` VARCHAR(8) NOT NULL, 
+            `shop-link` VARCHAR(255) NOT NULL, 
+            `date-changed` DATE NOT NULL
+        )
 
     - Have successfully filled in the .env file with a:
         - HOST

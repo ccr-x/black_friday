@@ -1,7 +1,6 @@
 import signal
 from dotenv import load_dotenv
 from pathlib import Path
-import psycopg2
 import os
 from time import sleep
 from bs4 import BeautifulSoup
@@ -9,6 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from datetime import datetime
+import mariadb
 
 OPERATING_SYSTEM = "windows"
 
@@ -293,7 +293,7 @@ class Connection(object):
 
         # Make connection with the Postgresql database
         try:
-            self.connection = psycopg2.connect(
+            self.connection = mariadb.connect(
                 host=host,
                 port=port,
                 user=username,

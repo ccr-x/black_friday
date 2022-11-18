@@ -32,4 +32,4 @@ async def start_black_friday():
 async def stop_black_friday():
     sbf()
 
-client.run("EVsVAvyhxNnugmTiCaorwBLuzNyoBaIs")
+client.run(TOKEN)

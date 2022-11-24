@@ -8,7 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from datetime import datetime
-import mariadb
+import psycopg2
 
 OPERATING_SYSTEM = "linux"
 
@@ -289,15 +289,16 @@ class Connection(object):
         host = os.getenv('HOST')
         username = os.getenv('USER')
         password = os.getenv('PWDS')
-        # port = os.getenv('PORT')
+        port = os.getenv('PORT')
         database = os.getenv('DB')
 
         # Make connection with the Postgresql database
         try:
-            self.connection = mariadb.connect(
+            self.connection = psycopg2.connect(
                 host=host,
-                user="root",
+                user=username,
                 password=password,
+                port=port,
                 database=database
             )
             print("Connection Made to Database")

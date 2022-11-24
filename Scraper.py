@@ -1,7 +1,6 @@
 import signal
 from dotenv import load_dotenv
 from pathlib import Path
-import psycopg2
 import os
 from time import sleep
 from bs4 import BeautifulSoup
@@ -9,8 +8,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from datetime import datetime
+import mariadb
 
-OPERATING_SYSTEM = "windows"
+OPERATING_SYSTEM = "linux"
 
 # --- Stray Functions --- #
 def screenshot(link: str, item_name: str, tag: str, sharepoint=True, typeof: str = None, name: str = None):
@@ -108,16 +108,17 @@ class Driver(object):
 
     def __init__(self):
 
-        self.options = webdriver.FirefoxOptions()
+        self.options = webdriver.ChromeOptions()
 
         # Set headless mode to True (Does not open a physical browser)
         self.options.headless = True
+        self.options.binary_location = 'usr/bin/chromium'
 
         # Fools the browser by letting it know that it is not a bot
         self.options.add_argument('--disable-blink-features=AutomationControlled')
 
         # Set driver to firefox
-        self.driver = webdriver.Firefox(options=self.options)
+        self.driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver',options=self.options)
 
     def get(self, url):
         """ Opens a new instance of firefox and goes the provided link
@@ -288,18 +289,18 @@ class Connection(object):
         host = os.getenv('HOST')
         username = os.getenv('USER')
         password = os.getenv('PWDS')
-        port = os.getenv('PORT')
+        # port = os.getenv('PORT')
         database = os.getenv('DB')
 
         # Make connection with the Postgresql database
         try:
-            self.connection = psycopg2.connect(
+            self.connection = mariadb.connect(
                 host=host,
-                port=port,
-                user=username,
+                user="root",
                 password=password,
                 database=database
             )
+            print("Connection Made to Database")
 
         except Exception as err:
             print(f"{bcolors.FAIL}[WARNING]: {bcolors.ENDC + type(err).__name__}: {err}")
@@ -517,4 +518,5 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
 

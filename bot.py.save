@@ -22,7 +22,6 @@ client = commands.Bot(command_prefix='$', intents=discord.Intents.all())
 
 @client.command()
 async def start_black_friday(ctx):
-    user = ctx.message.author.name
     await ctx.send("Starting Black Friday Scraping")
     
     while loop:
@@ -35,26 +34,25 @@ async def start_black_friday(ctx):
         for item in data:
                     
             # Obtain specified row from database
-            result = conn.get(table="black_friday", where=f"`item-name` = {item['`item-name`']}")
+            result = conn.get(table="black_friday", where=f"item-name = {item['item-name']}")
 
-            if result is not None:
+            if len(result) > 0:
                 # Check if the price has changed
-                if result['`item-price`'] != item['`item-price`']:
+                if result['item-price'] != item['item-price']:
 
                     # Update item price if it changed
-                    conn.update(table="black_friday", setter={"`item-price`": item['`item-price`']}, where={"`item-name`": item['`item-name`']})
+                    conn.update(table="black_friday", setter={"item-price": item['item-price']}, where={"item-name": item['item-name']})
 
                 # Alert if item price has dropped
-                if result['`item-price`'] < item['`item-price`']:
+                if result['item-price'] < item['item-price']:
                             
                     # Alert code
-                    await ctx.send(f"@{user}: The price of {item['`item-name`']} went down from {result['`item-price`']} to {item['`item-price`']}!")
+                    await ctx.send(f"@{user}: The price of {item['item-name']} went down from {result['item-price']} to {item['item-price']}!")
             else:
-                conn.create(table='black_friday', data={"`item-name`": item['`item-name`'], "`item-price`": item['`item-price`'], "`shop-name`": item['`shop-name`'], "`shop-link`": item['`shop-link`']})
+                conn.create(table="black_friday", data={"item-name": item['
+]})
         # Wait 5 minutes before scraping again
         # Bot cannot sleep for more than 30 seconds
-
-        conn.close()
 
 
 @client.command()

@@ -1,0 +1,15 @@
+services:
+  all:
+    build:
+      context: .
+    ports:
+      - "2345:2345"
+    environment:
+      - ENVIRONMENT=dev
+    volumes:
+      - sharedStorage:/src/webscraper/
+    image: webscraper
+volumes:
+  sharedStorage:
+    external: true
+    name: sharedStorage
